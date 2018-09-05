@@ -27,23 +27,11 @@ module RTanque
 
     # Starts the match
     # @param [Boolean] gui if false, runs headless match
-    def start(gui = false, broadcast = false, port = 8080, interval = 1, audience = 0)
-      @match = Server.new(SerializableMatch.new(match), port, interval, audience) if broadcast
+    def start(output, interval)
+      @serializable_match = SerializableMatch.new(match, output, interval)
 
-      if gui
-        begin
-          require 'rtanque/gui'
-          window = RTanque::Gui::Window.new(self.match)
-          trap(:INT) { window.close }
-          window.show
-        rescue ::LoadError => e
-          puts 'This version of rtanque(core) needs rtanque_gui gem to run with graphics'
-          exit 1
-        end
-      else
-        trap(:INT) { self.match.stop }
-        self.match.start
-      end
+      trap(:INT) { @serializable_match.stop }
+      @serializable_match.start
 
     end
 

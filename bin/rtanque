@@ -24,14 +24,11 @@ LONGDESC
   method_option :height, :aliases => '-h', :default => 450, :type => :numeric, :banner => 'height of window'
   method_option :max_ticks, :aliases => '-m', :default => Float::INFINITY, :type => :numeric, :banner => 'max ticks allowed per match'
   method_option :teams, :default => false, :type => :boolean, :banner => 'true to do a team based match based on tank names'
-  method_option :gui, :default => false, :type => :boolean, :banner => 'false to run headless(default)'
   method_option :gc, :default => true, :type => :boolean, :banner => 'disable GC (EXPERIMENTAL)'
   method_option :quiet, :aliases => '-q', :default => false, :type => :boolean, :banner => 'disable chatter'
   method_option :seed, :default => Kernel.srand, :type => :numeric, :banner => 'random number seed value'
-  method_option :broadcast, :default => false, :type => :boolean, :banner => 'broadcast info about battle'
-  method_option :interval, :default => 1, :type => :numeric, :banner => 'broadcast every n ticks'
-  method_option :port, :default => 8080, :type => :numeric, :banner => 'port to bradcast match'
-  method_option :audience, :default => 0, :type => :numeric, :banner => 'minimum audience to broadcast match'
+  method_option :interval, :default => 1, :type => :numeric, :banner => 'save every n ticks'
+  method_option :output, :default => 'match.json', :type => :string, :banner => 'default output for current match'
 
   def start(*brain_paths)
     Kernel.srand(options[:seed])
@@ -46,7 +43,7 @@ LONGDESC
     }
     self.print_start_banner(runner) unless options[:quiet]
     self.set_gc(options[:gc]) {
-      runner.start(options[:gui], options[:broadcast], options[:port], options[:interval], options[:audience])
+      runner.start(options[:output], options[:interval])
     }
     self.print_runner_stats(runner) unless options[:quiet]
   end

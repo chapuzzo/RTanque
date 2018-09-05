@@ -25,8 +25,8 @@ This gem provides the core without gui, for that you'll need rtanque_gui.
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  # gem.add_dependency 'octokit', '~> 2.7.0'
-  # gem.add_dependency 'thor', '~> 0.17.0'
+  gem.add_dependency 'octokit', '~> 2.7.0'
+  gem.add_dependency 'thor', '~> 0.17.0'
   # gem.add_dependency 'faye-websocket', '~> 0.10.7'
   # gem.add_dependency 'thin', '~> 1.7.2'
 
